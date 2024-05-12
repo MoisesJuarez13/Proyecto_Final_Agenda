@@ -58,38 +58,49 @@ int agregar_usuario(Agenda *agenda, int contAgenda)
     printf("Telefono: ");
     fgets(agenda[contAgenda].telefono, sizeof(agenda[contAgenda].telefono), stdin);
     agenda[contAgenda].telefono[strcspn(agenda[contAgenda].telefono, "\n")] = '\0';
-
+    ordenar_id(agenda, contAgenda + 1);
     return contAgenda + 1;
 }
 
 int buscar_usuario(Agenda *agenda, int contAgenda)
 {
     char ndi_aux[T_NDI];
-    int i = 0;
+    int inicio = 0;
+    int fin=contAgenda-1;
     int band = 0;
-    clock_t inicio,fin;
+    int i=0;
+    clock_t inicio_tiempo,fin_tiempo;
     double tiempo;
     printf("Ingresa el NDI a buscar: ");
     fgets(ndi_aux, sizeof(ndi_aux), stdin);
     ndi_aux[strcspn(ndi_aux, "\n")] = '\0';
-
-    inicio=clock();
-    for (i = 0; i < contAgenda && band == 0; i++)
+    int num_buscar=atoi(ndi_aux);
+    inicio_tiempo=clock();
+    while (inicio<=fin)
     {
-        if (strcmp(agenda[i].ndi, ndi_aux) == 0)
-        {
-            band = 1;
+        int medio=(inicio+fin)/2;
+        int comparacion=atoi(agenda[medio].ndi);
+        if(comparacion==num_buscar){
+            fin_tiempo=clock();
+            tiempo=((double)(fin_tiempo - inicio_tiempo)) / CLOCKS_PER_SEC;
+            printf("Elementos iterados: %i\n", i);
+            printf("Tiempo de busqueda: %f segundos\n", tiempo);
+            return medio;
         }
+        else if(num_buscar<comparacion){
+            fin=medio-1;
+        }
+        else{
+            inicio=medio+1;
+        }
+        i++;
     }
-    fin=clock();
+    
+    fin_tiempo=clock();
+    tiempo=((double)(fin_tiempo - inicio_tiempo)) / CLOCKS_PER_SEC;
     printf("Elementos iterados: %i\n", i);
-    tiempo=((double)(fin - inicio)) / CLOCKS_PER_SEC;
-    if (!band)
-    {
-        return -1;
-    }
-
-    return i - 1;
+    printf("Tiempo de busqueda: %f segundos\n", tiempo);
+    return -1;
 }
 
 int modificar_usuario(Agenda *agenda, int posicion)
@@ -233,9 +244,7 @@ void leer_archivo(const char *nombre_archivo, Agenda *agenda, int *contAgenda)
                     strncpy(agenda[*contAgenda].nombre, arr[1], sizeof(agenda[*contAgenda].nombre));
                     strncpy(agenda[*contAgenda].correo, arr[2], sizeof(agenda[*contAgenda].correo));
                     strncpy(agenda[*contAgenda].telefono, arr[3], sizeof(agenda[*contAgenda].telefono));
-
                     (*contAgenda)++;
-
                     printf("NDI:%s\n", arr[0]);
                     printf("Nombre:%s\n", arr[1]);
                     printf("Correo:%s\n", arr[2]);
@@ -244,6 +253,7 @@ void leer_archivo(const char *nombre_archivo, Agenda *agenda, int *contAgenda)
             }
         }
         fclose(archivo);
+        ordenar_id(agenda, *contAgenda);
     }
     else
     {
@@ -256,31 +266,22 @@ void ordenar_id(Agenda *agenda, int contAgenda)
 {
     clock_t inicio,fin;
     double tiempo;
+    int pos;
+    Agenda temp;
     inicio=clock();
-    for (int i = 0; i < contAgenda; i++)
+    for (int i = 1; i < contAgenda; i++)
     {
-        for (int j = 0; j < contAgenda - 1; j++)
+        pos=i;
+        temp=agenda[i];
+        while(pos>0 && atoi(agenda[pos-1].ndi)>atoi(temp.ndi))
         {
-            if (atoi(agenda[j].ndi) > atoi(agenda[j + 1].ndi))
-            {
-                // printf("agenda 1 %i",atoi(agenda[j].ndi));
-                // printf("agenda 2 %i",atoi(agenda[j+1].ndi));
-                // printf("\n");
-                Agenda temp = agenda[j];
-                agenda[j] = agenda[j + 1];
-                agenda[j + 1] = temp;
-            }
+           agenda[pos]=agenda[pos-1];
+           pos-=1;
         }
+        agenda[pos] = temp;
     }
     fin=clock();
-    mostrar_todos(agenda, contAgenda);
-    tiempo=((double)(fin - inicio)) / CLOCKS_PER_SEC;
-    printf("Tiempo de ordenamiento:%i\n");
-    // printf("ID ordenados de menor a mayor:\n");
-    // for (int i=0; i < contAgenda; i++) {
-    //     printf("%s ", agenda[i].ndi);
-    //     printf("%s\n", agenda[i].nombre);
-    //     printf("%s\n", agenda[i].correo);
-    //     printf("%s\n", agenda[i].telefono);
-    // }
+     tiempo = ((double)(fin - inicio)) / CLOCKS_PER_SEC;
+     printf("Tiempo de ordenamiento: %f segundos\n", tiempo);
+    
 }

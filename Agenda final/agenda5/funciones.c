@@ -58,7 +58,7 @@ int agregar_usuario(Agenda *agenda, int contAgenda)
     printf("Telefono: ");
     fgets(agenda[contAgenda].telefono, sizeof(agenda[contAgenda].telefono), stdin);
     agenda[contAgenda].telefono[strcspn(agenda[contAgenda].telefono, "\n")] = '\0';
-    ordenar_id(agenda, contAgenda + 1);
+    ordenar_id(agenda, contAgenda);
     return contAgenda + 1;
 }
 
@@ -135,7 +135,7 @@ int mostrar_todos(Agenda *agenda, int contAgenda)
 
     printf("+ + Mostrar Usuarios + + \n");
 
-    for (int i = 1; i < contAgenda; i++)
+    for (int i = 0; i < contAgenda; i++)
     {
         mostrar_usuario(agenda, i);
         printf("\n");

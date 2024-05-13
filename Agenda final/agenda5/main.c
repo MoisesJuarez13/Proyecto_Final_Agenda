@@ -55,6 +55,9 @@ int main(int argc, char *argv[]){
                 {
                     contAgenda = retorno;
                     printf("Usuario %i, agregado\n", contAgenda);
+                    if(contAgenda>1){
+                        ordenar_alta(agenda,contAgenda);
+                    }
                 }
             }
             else

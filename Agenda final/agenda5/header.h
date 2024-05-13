@@ -24,3 +24,4 @@ int eliminar_usuario_2(Agenda *agenda, int contAgenda, int pos);
 void guardar_cambios(char*nombre_archivo,Agenda *agenda, int contAgenda);
 void leer_archivo(const char *nombre_archivo, Agenda *agenda, int *contAgenda);
 void ordenar_id(Agenda *agenda, int contAgenda);
+void ordenar_alta(Agenda *agenda, int contAgenda);

@@ -245,10 +245,10 @@ void leer_archivo(const char *nombre_archivo, Agenda *agenda, int *contAgenda)
                     strncpy(agenda[*contAgenda].correo, arr[2], sizeof(agenda[*contAgenda].correo));
                     strncpy(agenda[*contAgenda].telefono, arr[3], sizeof(agenda[*contAgenda].telefono));
                     (*contAgenda)++;
-                    //printf("NDI:%s\n", arr[0]);
-                    //printf("Nombre:%s\n", arr[1]);
-                    //printf("Correo:%s\n", arr[2]);
-                    //printf("Telefono:%s\n", arr[3]);
+                    printf("NDI:%s\n", arr[0]);
+                    printf("Nombre:%s\n", arr[1]);
+                    printf("Correo:%s\n", arr[2]);
+                    printf("Telefono:%s\n", arr[3]);
                 }
             }
         }

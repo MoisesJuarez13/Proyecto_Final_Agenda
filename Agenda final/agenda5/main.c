@@ -29,8 +29,8 @@ int main(int argc, char *argv[]){
         printf("[4] Muestra todos \n");
         printf("[5] Elimina usuario \n");
         printf("[6] Guardar archivo\n");
-        printf("[7] Mostrar ordenados\n");
-        printf("[8] Salir del programa \n");
+        // printf("[7] Mostrar ordenados\n");
+        printf("[7] Salir del programa \n");
         printf("Ingresa opcion: ");
 
         scanf("%i", &opc);

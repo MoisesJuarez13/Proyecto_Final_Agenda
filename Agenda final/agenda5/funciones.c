@@ -210,13 +210,13 @@ void leer_archivo(const char *nombre_archivo, Agenda *agenda, int *contAgenda)
 
     if (fgets(buffer, 1000, archivo) == NULL)
     {
-        printf("El archivo está vacío.\n");
+        printf("El archivo esta vacio.\n");
         fclose(archivo);
         return;
     }
     rewind(archivo);
 
-    if (strstr(buffer, "ID") && strstr(buffer, "Nombre") && strstr(buffer, "Correo") && strstr(buffer, "Telefono"))
+    if (strstr(buffer, "id") && strstr(buffer, "nombre") && strstr(buffer, "correo") && strstr(buffer, "celular"))
     {
         fgets(buffer, 1000, archivo);
         while (fgets(buffer, 1000, archivo))
@@ -245,10 +245,10 @@ void leer_archivo(const char *nombre_archivo, Agenda *agenda, int *contAgenda)
                     strncpy(agenda[*contAgenda].correo, arr[2], sizeof(agenda[*contAgenda].correo));
                     strncpy(agenda[*contAgenda].telefono, arr[3], sizeof(agenda[*contAgenda].telefono));
                     (*contAgenda)++;
-                    //printf("NDI:%s\n", arr[0]);
-                    //printf("Nombre:%s\n", arr[1]);
-                    //printf("Correo:%s\n", arr[2]);
-                    //printf("Telefono:%s\n", arr[3]);
+                    printf("NDI:%s\n", arr[0]);
+                    printf("Nombre:%s\n", arr[1]);
+                    printf("Correo:%s\n", arr[2]);
+                    printf("Telefono:%s\n", arr[3]);
                 }
             }
         }
